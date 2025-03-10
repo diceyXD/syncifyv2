@@ -25,6 +25,7 @@ export function ThemeProvider({ children }) {
       root.style.setProperty('--dark-primary', '#e0e0e0');
       root.style.setProperty('--dark-secondary', '#f0f0f0');
       root.style.setProperty('--dark-text', '#000000');
+      root.style.setProperty('--syncify-red', '#e53935'); // Adding Syncify logo red color for light mode
     }
   }, [isDarkMode]);
 
