@@ -24,7 +24,7 @@ ChartJS.register(
 );
 
 function Attendance() {
-  const subjects = ['CST 402', 'CST 414', 'CST 466', 'CST 448'];
+  const subjects = ['CST 402', 'CST 414', 'CST 466', 'CST 448', 'CSD 416'];
   const months = ['December', 'January', 'February', 'March', 'April'];
 
   // Sample data for overall and subject-wise attendance
@@ -33,7 +33,8 @@ function Attendance() {
     'CST 402': [90, 85, 92, 88, 91],
     'CST 414': [95, 89, 94, 92, 93],
     'CST 466': [88, 92, 96, 90, 94],
-    'CST 448': [94, 87, 93, 91, 92]
+    'CST 448': [94, 87, 93, 91, 92],
+    'CSD 416': [100, 100, 100, 100, 100]
   };
 
   // Sample attendance records data
@@ -69,6 +70,14 @@ function Attendance() {
       classesAttended: 46,
       totalClasses: 50,
       attendancePercentage: 92
+    },
+    {
+      subjectCode: 'CSD 416',
+      subjectName: 'Project Phase II',
+      facultyName: 'Reeba B',
+      classesAttended: 50,
+      totalClasses: 50,
+      attendancePercentage: 100
     }
   ];
 
@@ -110,6 +119,29 @@ function Attendance() {
     }]
   };
 
+  const barChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'Current Subject-wise Attendance'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 100,
+        title: {
+          display: true,
+          text: 'Attendance Percentage'
+        }
+      }
+    }
+  };
+
   const lineChartOptions = {
     responsive: true,
     plugins: {
@@ -133,27 +165,125 @@ function Attendance() {
     }
   };
 
-  const barChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Current Subject-wise Attendance'
-      }
+  const [selectedWeek, setSelectedWeek] = useState(1);
+  const totalWeeks = 16; // Assuming a 16-week semester
+
+  // Function to calculate dates for a given week number
+  const getWeekDates = (weekNumber) => {
+    const startDate = new Date('2024-12-16'); // Week 1 starts from Dec 16, 2024
+    const weekStart = new Date(startDate);
+    weekStart.setDate(startDate.getDate() + (weekNumber - 1) * 7);
+
+    const weekDates = {
+      Monday: new Date(weekStart),
+      Tuesday: new Date(weekStart.setDate(weekStart.getDate() + 1)),
+      Wednesday: new Date(weekStart.setDate(weekStart.getDate() + 1)),
+      Thursday: new Date(weekStart.setDate(weekStart.getDate() + 1)),
+      Friday: new Date(weekStart.setDate(weekStart.getDate() + 1))
+    };
+
+    return weekDates;
+  };
+
+  // Sample weekly attendance data for multiple weeks
+  const semesterWeeklyAttendance = {
+    1: {
+      Monday: [
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: false, subject: 'CST 414', faculty: 'Biju G' },
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' },
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: true, subject: 'CST 414', faculty: 'Biju G' }
+      ],
+      Tuesday: [
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' },
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: false, subject: 'CST 414', faculty: 'Biju G' },
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' }
+      ],
+      Wednesday: [
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: true, subject: 'CST 414', faculty: 'Biju G' },
+        { present: false, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' },
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: true, subject: 'CST 414', faculty: 'Biju G' }
+      ],
+      Thursday: [
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' },
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: true, subject: 'CST 414', faculty: 'Biju G' },
+        { present: false, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' }
+      ],
+      Friday: [
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' }
+      ]
     },
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 100,
-        title: {
-          display: true,
-          text: 'Attendance Percentage'
-        }
-      }
+    2: {
+      Monday: [
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: true, subject: 'CST 414', faculty: 'Biju G' },
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' },
+        { present: false, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: true, subject: 'CST 414', faculty: 'Biju G' }
+      ],
+      Tuesday: [
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' },
+        { present: false, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: true, subject: 'CST 414', faculty: 'Biju G' },
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' }
+      ],
+      Wednesday: [
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: false, subject: 'CST 414', faculty: 'Biju G' },
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' },
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: true, subject: 'CST 414', faculty: 'Biju G' }
+      ],
+      Thursday: [
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' },
+        { present: true, subject: 'CST 402', faculty: 'Jeena V R' },
+        { present: false, subject: 'CST 414', faculty: 'Biju G' },
+        { present: true, subject: 'CST 466', faculty: 'Reeba B' },
+        { present: true, subject: 'CST 448', faculty: 'Remya Reghu' }
+      ],
+      Friday: [
+        { present: false, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' },
+        { present: true, subject: 'CSD 416', faculty: 'Reeba B' }
+      ]
     }
+  };
+
+  const timeSlots = [
+    '9:00 AM - 10:00 AM',
+    '10:00 AM - 11:00 AM',
+    '11:00 AM - 12:00 PM',
+    '2:00 PM - 3:00 PM',
+    '3:00 PM - 4:00 PM',
+    '4:00 PM - 5:00 PM'
+  ];
+
+  const handleWeekChange = (week) => {
+    setSelectedWeek(week);
   };
 
   return (
@@ -206,6 +336,64 @@ function Attendance() {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+
+          {/* Weekly Calendar Section */}
+          <div className="bg-gray-50 dark:bg-dark-secondary/20 p-4 rounded-md w-full transition-colors duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-gray-700 dark:text-gray-200">Weekly Attendance Calendar</h3>
+              <div className="flex items-center space-x-4">
+                <select
+                  value={selectedWeek}
+                  onChange={(e) => handleWeekChange(parseInt(e.target.value))}
+                  className="px-3 py-1 text-sm bg-gray-200 dark:bg-dark-secondary rounded-md hover:bg-gray-300 dark:hover:bg-dark-secondary/50 transition-colors duration-200"
+                >
+                  {Array.from({ length: totalWeeks }, (_, i) => i + 1).map((week) => (
+                    <option key={week} value={week}>Week {week}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr>
+                    <th className="p-2 border dark:border-gray-700 bg-gray-100 dark:bg-dark-secondary/30 text-gray-700 dark:text-gray-300">Date</th>
+                    <th className="p-2 border dark:border-gray-700 bg-gray-100 dark:bg-dark-secondary/30 text-gray-700 dark:text-gray-300">Day</th>
+                    {Array.from({ length: 6 }, (_, index) => (
+                      <th key={index} className="p-2 border dark:border-gray-700 bg-gray-100 dark:bg-dark-secondary/30 text-gray-700 dark:text-gray-300">
+                        Hour {index + 1}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(semesterWeeklyAttendance[selectedWeek] || {}).map(([day, hours]) => {
+                    const weekDates = getWeekDates(selectedWeek);
+                    const currentDate = weekDates[day];
+                    return (
+                      <tr key={day}>
+                        <td className="p-2 border dark:border-gray-700 text-gray-600 dark:text-gray-400 text-sm font-medium">
+                          {currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </td>
+                        <td className="p-2 border dark:border-gray-700 text-gray-600 dark:text-gray-400 text-sm font-medium">
+                          {day}
+                        </td>
+                        {hours.map((slot, hourIndex) => (
+                          <td key={`${day}-${hourIndex}`} className="p-2 border dark:border-gray-700">
+                            <div className="flex flex-col items-center justify-center space-y-1">
+                              <div className={`w-4 h-4 rounded-full ${slot.present ? 'bg-green-500' : 'bg-red-500'}`} />
+                              <div className="text-xs font-medium text-gray-700 dark:text-gray-300">{slot.subject}</div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400">{slot.faculty}</div>
+                            </div>
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
