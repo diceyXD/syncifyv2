@@ -23,10 +23,10 @@ function Dashboard() {
   return (
     <div className="flex h-screen w-full bg-[var(--dark-bg)] text-[var(--dark-text)]">
       {/* Sidebar */}
-      <div className="hidden md:flex w-72 lg:w-80 bg-[var(--dark-surface)] shadow-lg flex-shrink-0 animate-fade-in">
+      <div className="hidden md:flex w-72 lg:w-80 bg-[var(--dark-surface)] shadow-lg flex-shrink-0">
         <div className="flex flex-col h-full w-full">
           <div className="flex items-center justify-center h-20 px-4 bg-[var(--dark-bg)]">
-            <img src={syncifyLogo} alt="Syncify" className={`h-7 w-auto animate-slide-in transition-filter duration-300 ${isDarkMode ? 'filter brightness-0 invert' : ''}`} />
+            <img src={syncifyLogo} alt="Syncify" className={`h-7 w-auto transition-filter duration-300 ${isDarkMode ? 'filter brightness-0 invert' : ''}`} />
           </div>
           <nav className="flex-1 px-4 py-6 space-y-2">
             {navigation.map((item) => {
@@ -44,22 +44,11 @@ function Dashboard() {
                       : 'text-[var(--dark-text)] hover:bg-[var(--dark-secondary)] hover:text-[var(--syncify-red)]'
                     } group flex items-center px-4 py-3 text-sm font-medium rounded-md transition-all duration-200 transform hover:scale-105`}
                 >
-                  {item.name === 'Placement' && (
-                    <div className="briefcase-icon-container mr-3">
-                      <FaBriefcase className="h-5 w-5 briefcase-icon" />
-                    </div>
-                  )}
-                  {item.name === 'Attendance' && (
-                    <div className="calendar-icon-container mr-3">
-                      <div className="calendar-top"></div>
-                      <FaCalendarAlt className="h-5 w-5 calendar-icon" />
-                    </div>
-                  )}
-                  {item.name === 'Marks' && (
-                    <div className="chart-icon-container mr-3">
-                      <FaChartBar className="h-5 w-5 chart-icon" />
-                    </div>
-                  )}
+                  <div className="icon-container mr-3">
+                    {item.name === 'Placement' && <FaBriefcase className="h-5 w-5 nav-icon" />}
+                    {item.name === 'Attendance' && <FaCalendarAlt className="h-5 w-5 nav-icon" />}
+                    {item.name === 'Marks' && <FaChartBar className="h-5 w-5 nav-icon" />}
+                  </div>
                   {item.name}
                 </Link>
               );
