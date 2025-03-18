@@ -58,13 +58,6 @@ function Dashboard() {
                   {item.name === 'Marks' && (
                     <div className="chart-icon-container mr-3">
                       <FaChartBar className="h-5 w-5 chart-icon" />
-                      <svg className="chart-drawing" width="20" height="20" viewBox="0 0 20 20">
-                        <path className="chart-path chart-outline" d="M3,17 L17,17" fill="none" stroke="currentColor" strokeWidth="2" />
-                        <path className="chart-path chart-bar-1" d="M5,17 L5,13" fill="none" stroke="currentColor" strokeWidth="2" />
-                        <path className="chart-path chart-bar-2" d="M9,17 L9,10" fill="none" stroke="currentColor" strokeWidth="2" />
-                        <path className="chart-path chart-bar-3" d="M13,17 L13,7" fill="none" stroke="currentColor" strokeWidth="2" />
-                        <path className="chart-path chart-bar-4" d="M17,17 L17,11" fill="none" stroke="currentColor" strokeWidth="2" />
-                      </svg>
                     </div>
                   )}
                   {item.name}
