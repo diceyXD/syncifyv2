@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { FaSun, FaMoon, FaUserCircle, FaSignOutAlt, FaCalendarAlt, FaChartBar, FaBriefcase } from 'react-icons/fa';
+import { FaSun, FaMoon, FaUserCircle, FaSignOutAlt, FaCalendarAlt, FaChartBar, FaBriefcase, FaLaptopCode, FaPaperPlane } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 import syncifyLogo from '../assets/syncify.png';
 import './Dashboard.css';
@@ -13,6 +13,8 @@ function Dashboard() {
     { name: 'Attendance', href: '/dashboard/attendance', icon: FaCalendarAlt },
     { name: 'Marks', href: '/dashboard/marks', icon: FaChartBar },
     { name: 'Placement', href: '/dashboard/placement', icon: FaBriefcase },
+    { name: 'Skills', href: '/dashboard/skills', icon: FaLaptopCode },
+    { name: 'Feedback', href: '/dashboard/feedback', icon: FaPaperPlane },
   ];
 
   const handleSignOut = () => {
@@ -48,6 +50,8 @@ function Dashboard() {
                     {item.name === 'Placement' && <FaBriefcase className="h-5 w-5 nav-icon" />}
                     {item.name === 'Attendance' && <FaCalendarAlt className="h-5 w-5 nav-icon" />}
                     {item.name === 'Marks' && <FaChartBar className="h-5 w-5 nav-icon" />}
+                    {item.name === 'Skills' && <FaLaptopCode className="h-5 w-5 nav-icon" />}
+                    {item.name === 'Feedback' && <FaPaperPlane className="h-5 w-5 nav-icon" />}
                   </div>
                   {item.name}
                 </Link>

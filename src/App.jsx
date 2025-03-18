@@ -10,6 +10,8 @@ import Dashboard from './pages/Dashboard';
 import Attendance from './pages/Attendance';
 import Marks from './pages/Marks';
 import Placement from './pages/Placement';
+import Skills from './pages/Skills';
+import Feedback from './pages/Feedback';
 import Landing from './pages/Landing';
 
 // Theme Provider
@@ -32,6 +34,8 @@ function App() {
               <Route path="attendance" element={<Attendance />} />
               <Route path="marks" element={<Marks />} />
               <Route path="placement" element={<Placement />} />
+              <Route path="skills" element={<Skills />} />
+              <Route path="feedback" element={<Feedback />} />
             </Route>
           </Routes>
         </div>
