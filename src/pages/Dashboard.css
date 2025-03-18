@@ -17,12 +17,17 @@
 /* Hover animation for all navigation icons */
 .group:hover .nav-icon {
     transform: scale(1.2);
-    color: var(--syncify-red, currentColor);
+    /* Remove the red color from the general hover state */
 }
 
 /* Only apply red color in light mode */
 :root:not(.dark) .group:hover .nav-icon {
     color: var(--syncify-red, currentColor);
+}
+
+/* Ensure dark mode uses current color */
+.dark .group:hover .nav-icon {
+    color: currentColor;
 }
 
 /* Only hover effects for navigation items */
